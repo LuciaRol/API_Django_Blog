@@ -159,3 +159,10 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
 }
 
+
+# Use custom user model
+AUTH_USER_MODEL = 'blog_drf.User'
+
+
+
+
