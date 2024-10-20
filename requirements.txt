@@ -1,0 +1,8 @@
+django
+djangorestframework
+djangorestframework-simplejwt
+drf-spectacular
+django_extensions
+requests
+psycopg2-binary>=2.9
+ipdb
