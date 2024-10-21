@@ -19,12 +19,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from blog_drf.views import PostViewSet, UserRegistrationView, UserLoginView
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from blog_drf.views import UserRegistrationView, UserLoginView
 
 
 router = DefaultRouter()
+router.register(r'posts', PostViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # Django admin verifies the user is authenticated by token

@@ -2,7 +2,7 @@
 
 from rest_framework import serializers
 from django.core.exceptions import ValidationError  # Import ValidationError
-from .models import User
+from .models import User, Post
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the User model."""
@@ -21,3 +21,14 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"username": str(e)})
 
         return user
+    
+
+
+class PostSerializer(serializers.ModelSerializer):
+    """Serializador para el modelo Post."""
+
+    class Meta:
+        model = Post
+        fields = ['id', 'title', 'content', 'author', 'created_at', 'updated_at', 'published']
+        read_only_fields = ['id', 'author', 'created_at', 'updated_at']
+

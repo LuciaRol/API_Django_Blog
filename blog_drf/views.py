@@ -1,12 +1,14 @@
 # blog_drf/views.py
 
-from rest_framework import generics, status, serializers
+from rest_framework import generics, status, serializers, viewsets, permissions
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import authenticate
-from .models import User
-from .serializers import UserSerializer
+from .serializers import UserSerializer, PostSerializer
+from .models import User, Post
+
+
 
 # REGISTER VIEW
 class UserRegistrationView(generics.CreateAPIView):
@@ -40,4 +42,22 @@ class UserLoginView(TokenObtainPairView):
             }, status=status.HTTP_200_OK)
         else:
             return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+
+# POST VIEWS
+
+# blog_drf/views.py
+
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    """Vista para el modelo Post."""
+    
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]  # Requiere autenticación para acceder a las vistas
+
+    def perform_create(self, serializer):
+        """Asigna el autor del post al usuario que hace la solicitud."""
+        serializer.save(author=self.request.user)
+
 

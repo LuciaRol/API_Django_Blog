@@ -2,6 +2,7 @@
 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.conf import settings
 #from django.core.exceptions import ValidationError
 
 class UserRole(models.TextChoices):
@@ -52,4 +53,27 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self) -> str:
         """Returns the username as a string."""
         return str(self.username)
+    
+
+# blog_drf/models.py
+
+
+
+class Post(models.Model):
+    """Modelo para las publicaciones de los usuarios."""
+    
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    published = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['-created_at']  # Ordena los posts de más reciente a más antiguo
+
+    def __str__(self):
+        """Devuelve el título del post como una representación en cadena."""
+        return self.title
+
 
